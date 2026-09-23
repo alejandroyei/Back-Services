@@ -17,3 +17,7 @@
 .delete-confirm{align-items:center;background:#fff7f7;border:1px solid #f0c5cd;border-radius:8px;color:#7f2434;display:flex;font-size:.86rem;justify-content:space-between;margin:0 0 1rem;padding:.75rem 1rem}.delete-confirm section{display:flex;gap:.5rem}
 .action-message{background:#e8f5ed;border:1px solid #bde1c8;border-radius:8px;color:#267446;padding:.7rem .9rem}
 .menu-university-logo{margin:0 .75rem .7rem;max-width:190px}
+
+img {
+    margin: 10px 0 20px 0;
+}

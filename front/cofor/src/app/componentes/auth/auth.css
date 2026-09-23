@@ -45,6 +45,16 @@
   width: 290px;
 }
 
+img {
+    display: block;
+  width: 80px;
+  max-width: 75%;
+  height: auto;
+  margin: 10px 0 0 10px;
+  object-fit: contain;
+
+}
+
 .brand, .brand:hover { color: #fff; font-size: 1.75rem; font-weight: 700; letter-spacing: -1px; text-decoration: none; z-index: 1; }
 .university-logo { background: #fff; border-radius: 7px; max-width: 190px; padding: .35rem .55rem; position: relative; width: 100%; z-index: 1; }
 .brand span { color: var(--co-red); }
@@ -70,6 +80,13 @@
 .auth-options a:hover { text-decoration: underline; }
 .login-button { --bs-btn-bg: var(--co-blue); --bs-btn-border-color: var(--co-blue); --bs-btn-hover-bg: var(--co-blue-dark); --bs-btn-hover-border-color: var(--co-blue-dark); border-radius: 7px; font-weight: 600; min-height: 47px; transition: transform .2s ease, box-shadow .2s ease; width: 100%; }
 .login-button:hover { box-shadow: 0 8px 18px rgba(21,63,135,.2); transform: translateY(-1px); }
+.google-access { display: grid; gap: .75rem; margin-top: 1.25rem; text-align: center; }
+.google-access > span { color: #8490a1; font-size: .78rem; }
+.google-button { align-items: center; background: #fff; border: 1px solid #d2dae7; border-radius: 7px; color: #35445c; display: flex; font-size: .88rem; font-weight: 600; gap: .65rem; justify-content: center; min-height: 45px; transition: background .2s ease, box-shadow .2s ease; width: 100%; }
+.google-button:hover:not(:disabled) { background: #f8faff; box-shadow: 0 4px 12px rgba(20,45,89,.1); }
+.google-button:disabled { cursor: wait; opacity: .7; }
+.google-g { color: #4285f4; font-size: 1.1rem; font-weight: 700; }
+.google-error { color: #bd233e; font-size: .78rem; margin: .8rem 0 0; text-align: center; }
 .auth-footer { color: #8a96a8; font-size: .74rem; margin: 1.55rem 0 0; text-align: center; }
 .login-notice { color: #64748b; font-size: .78rem; margin: 1.15rem 0 0; text-align: center; }
 .register-link { color: #718096; font-size: .84rem; margin: 1.25rem 0 0; text-align: center; }

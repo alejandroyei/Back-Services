@@ -1,6 +1,7 @@
 <main class="auth-page">
   <section class="auth-panel" aria-labelledby="login-title">
     <aside class="auth-brand" aria-label="CO360">
+      <img src="uniempresarial-logo.png" alt="Uniempresarial">
       <a class="brand" href="#" aria-label="CO360, inicio">CO<span>360</span></a>
 
       <section class="brand-message">
@@ -36,6 +37,17 @@
 
         <button class="btn btn-primary login-button" type="submit">Iniciar sesión</button>
       </form>
+
+      <section class="google-access" aria-label="Acceso con Google">
+        <span>o continúa con</span>
+        <button class="google-button" type="button" (click)="loginWithGoogle()" [disabled]="googleLoading()">
+          <span class="google-g" aria-hidden="true">G</span>{{ googleLoading() ? 'Conectando…' : 'Continuar con Google' }}
+        </button>
+      </section>
+
+      @if (googleError()) {
+        <p class="google-error" role="alert">{{ googleError() }}</p>
+      }
 
       @if (submitted()) {
         <p class="login-notice" role="status">La conexión con el servicio de autenticación se integrará aquí.</p>
