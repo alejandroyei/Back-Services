@@ -1,10 +1,10 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject, signal } from '@angular/core';
+import { Company, CompanyService } from '../../core/company.service';
 
 interface EmpresaCalificada {
+  id: number;
   nombre: string;
   sector: string;
-  calificacion: number;
-  imagen: string;
 }
 
 @Component({
@@ -16,18 +16,21 @@ interface EmpresaCalificada {
 export class CalificacionEmpresas {
   @Output() readonly logout = new EventEmitter<void>();
   @Output() readonly navigate = new EventEmitter<'alumnos' | 'gestion-empresas' | 'empresas' | 'entrega'>();
+  private readonly companiesService = inject(CompanyService);
+  protected readonly empresas = signal<EmpresaCalificada[]>([]);
+  protected readonly loading = signal(true);
+  protected readonly error = signal('');
 
-  protected readonly empresas: EmpresaCalificada[] = [
-    { nombre: 'Grupo Andino S.A.S.', sector: 'Servicios empresariales', calificacion: 4.8, imagen: 'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=900&q=80' },
-    { nombre: 'Tecnología Integral', sector: 'Tecnología', calificacion: 4.6, imagen: 'https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=900&q=80' },
-    { nombre: 'Comercializadora Nova', sector: 'Comercio', calificacion: 4.4, imagen: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=900&q=80' },
-    { nombre: 'Soluciones Logísticas', sector: 'Logística', calificacion: 4.7, imagen: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=900&q=80' },
-  ];
-
-  protected stars(rating: number): string[] {
-    return Array.from({ length: 5 }, (_, index) => index < Math.round(rating) ? '★' : '☆');
+  constructor() {
+    this.companiesService.list().subscribe({
+      next: (companies) => { this.empresas.set(companies.map((company) => this.mapCompany(company))); this.loading.set(false); },
+      error: () => { this.error.set('No fue posible cargar las empresas.'); this.loading.set(false); },
+    });
   }
+
+  protected initials(name: string): string { return name.trim().split(/\s+/).slice(0, 2).map((part) => part.charAt(0)).join('').toUpperCase(); }
 
   protected openSection(section: 'alumnos' | 'gestion-empresas' | 'empresas' | 'entrega'): void { this.navigate.emit(section); }
   protected closeSession(): void { this.logout.emit(); }
+  private mapCompany(company: Company): EmpresaCalificada { return { id: company.id_company, nombre: company.nombre_company, sector: company.sector }; }
 }

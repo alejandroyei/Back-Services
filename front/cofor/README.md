@@ -1,5 +1,31 @@
 # Cofor
 
+## Ejecución local con microservicios
+
+El front está configurado para consumir los servicios por HTTP, sin datos simulados:
+
+- `user-service`: `http://127.0.0.1:8000/api`
+- `companies-service`: `http://127.0.0.1:8001/api`
+
+En tres terminales independientes, desde `C:\cofor\Back-Services`, inicia los procesos:
+
+```powershell
+cd user-service
+.\venv\Scripts\python.exe manage.py runserver 8000
+```
+
+```powershell
+cd companies-service
+.\venv\Scripts\python.exe manage.py runserver 8001
+```
+
+```powershell
+cd front\cofor
+npm start
+```
+
+El inicio de sesión obtiene el JWT desde `user-service`; el front lo envía automáticamente al consultar, editar o eliminar alumnos. Las empresas se consultan desde `companies-service` en las dos vistas empresariales.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
 
 ## Development server

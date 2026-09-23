@@ -18,15 +18,28 @@ export interface UserRegistration {
   activo: number;
 }
 
+export interface User extends Omit<UserRegistration, 'contrasena_user'> {
+  id_user: number;
+  fecha_creacion: string;
+}
+
+/** Campos que la administración de alumnos puede modificar sin reenviar la contraseña. */
+export type UserUpdate = Partial<Omit<UserRegistration, 'contrasena_user'>>;
+
 @Injectable({ providedIn: 'root' })
 export class UserService {
   private readonly http = inject(HttpClient);
+  private readonly url = `${API_CONFIG.userService}/usuarios/`;
 
   login(credentials: LoginRequest): Observable<TokenResponse> {
     return this.http.post<TokenResponse>(`${API_CONFIG.userService}/token/`, credentials);
   }
 
-  register(user: UserRegistration): Observable<UserRegistration> {
-    return this.http.post<UserRegistration>(`${API_CONFIG.userService}/usuarios/`, user);
+  register(user: UserRegistration): Observable<User> {
+    return this.http.post<User>(this.url, user);
   }
+
+  list(): Observable<User[]> { return this.http.get<User[]>(this.url); }
+  update(id: number, user: UserUpdate): Observable<User> { return this.http.patch<User>(`${this.url}${id}/`, user); }
+  delete(id: number): Observable<void> { return this.http.delete<void>(`${this.url}${id}/`); }
 }

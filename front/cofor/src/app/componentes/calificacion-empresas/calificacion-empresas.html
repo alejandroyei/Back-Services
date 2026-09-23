@@ -11,14 +11,15 @@
     <button class="rated-logout" type="button" (click)="closeSession()">Cerrar sesión</button>
   </aside>
   <section class="rated-content" aria-labelledby="rated-title">
-    <header class="rated-header"><section><p class="rated-eyebrow">Consulta empresarial</p><h1 id="rated-title">Empresas</h1><p class="rated-intro">Conoce la calificación de las empresas vinculadas.</p></section><section class="rated-account"><span>UC</span><p><strong>Usuario CO360</strong><small>Administrador</small></p></section></header>
+    <header class="rated-header"><section><p class="rated-eyebrow">Consulta empresarial</p><h1 id="rated-title">Empresas</h1><p class="rated-intro">Empresas vinculadas a la plataforma.</p></section><section class="rated-account"><span>UC</span><p><strong>Usuario CO360</strong><small>Administrador</small></p></section></header>
     <section class="company-cards" aria-label="Calificaciones de empresas">
-      @for (empresa of empresas; track empresa.nombre) {
+      @if (error()) { <p class="company-empty" role="alert">{{ error() }}</p> }
+      @for (empresa of empresas(); track empresa.id) {
         <article class="rating-card">
-          <img class="company-image" [src]="empresa.imagen" [alt]="empresa.nombre">
-          <section class="rating-info"><h2>{{ empresa.nombre }}</h2><p>{{ empresa.sector }}</p><section class="rating" [attr.aria-label]="'Calificación ' + empresa.calificacion + ' de 5'">@for (star of stars(empresa.calificacion); track $index) { <span>{{ star }}</span> } <strong>{{ empresa.calificacion }}</strong></section></section>
+          <div class="company-image" aria-hidden="true">{{ initials(empresa.nombre) }}</div>
+          <section class="rating-info"><h2>{{ empresa.nombre }}</h2><p>{{ empresa.sector || 'Sector no especificado' }}</p><section class="rating"><strong>Empresa vinculada</strong></section></section>
         </article>
-      }
+      } @empty { @if (!loading() && !error()) { <p class="company-empty">No hay empresas registradas.</p> } }
     </section>
   </section>
 </main>
