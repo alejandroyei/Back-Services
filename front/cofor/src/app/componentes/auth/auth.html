@@ -4,6 +4,8 @@
       <img src="uniempresarial-logo.png" alt="Uniempresarial">
       <a class="brand" href="#" aria-label="CO360, inicio">CO<span>360</span></a>
 
+      <p>hlaaaaa</p>
+
       <section class="brand-message">
         <i aria-hidden="true"></i>
         <h1>Gestión conectada, decisiones claras.</h1>
@@ -18,13 +20,13 @@
       <h2 id="login-title">Bienvenido de nuevo</h2>
       <p class="intro">Ingresa con tus credenciales para continuar.</p>
 
-      <form (submit)="login(email.value, password.value); $event.preventDefault()" novalidate>
+      <form (submit)="login(); $event.preventDefault()" novalidate>
         <label for="email" class="form-label">Correo institucional</label>
-        <input #email id="email" class="form-control" type="email" placeholder="nombre@empresa.com" autocomplete="email" required>
+        <input id="email" class="form-control" type="email" placeholder="nombre@empresa.com" autocomplete="email" required>
 
         <label for="password" class="form-label mt-1">Contraseña</label>
         <section class="password-field">
-          <input #password id="password" class="form-control" [type]="showPassword() ? 'text' : 'password'" placeholder="••••••••" autocomplete="current-password" required>
+          <input id="password" class="form-control" [type]="showPassword() ? 'text' : 'password'" placeholder="••••••••" autocomplete="current-password" required>
           <button class="password-toggle" type="button" (click)="togglePassword()" [attr.aria-label]="showPassword() ? 'Ocultar contraseña' : 'Mostrar contraseña'">
             {{ showPassword() ? 'Ocultar' : 'Ver' }}
           </button>
@@ -35,7 +37,7 @@
           <a href="#recuperar">¿Olvidaste tu contraseña?</a>
         </section>
 
-        <button class="btn btn-primary login-button" type="submit" [disabled]="loading()">{{ loading() ? 'Ingresando…' : 'Iniciar sesión' }}</button>
+        <button class="btn btn-primary login-button" type="submit">Iniciar sesión</button>
       </form>
 
       <section class="google-access" aria-label="Acceso con Google">
@@ -49,7 +51,9 @@
         <p class="google-error" role="alert">{{ googleError() }}</p>
       }
 
-      @if (error()) { <p class="google-error" role="alert">{{ error() }}</p> }
+      @if (submitted()) {
+        <p class="login-notice" role="status">La conexión con el servicio de autenticación se integrará aquí.</p>
+      }
 
       <p class="register-link">¿Aún no tienes cuenta? <button type="button" (click)="openRegistration()">Regístrate</button></p>
       <p class="auth-footer">CO360 · Plataforma de gestión</p>
