@@ -25,6 +25,11 @@ class Company(models.Model):
         blank=True
     )
 
+    sector = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
     activo = models.IntegerField(
         default=1
     )

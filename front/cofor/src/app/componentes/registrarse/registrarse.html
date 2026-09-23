@@ -19,12 +19,22 @@
       <h2 id="register-title">Crea tu cuenta</h2>
       <p class="intro">Completa los datos para registrarte en CO360.</p>
 
-      <form (submit)="register(password.value, confirmation.value); $event.preventDefault()" novalidate>
+      <form #registerForm (submit)="register(registerForm, password.value, confirmation.value); $event.preventDefault()" novalidate>
         <label for="full-name" class="form-label">Nombre completo</label>
-        <input id="full-name" class="form-control" type="text" placeholder="Nombre y apellido" autocomplete="name" required>
+        <input name="fullName" id="full-name" class="form-control" type="text" placeholder="Nombre y apellido" autocomplete="name" required>
+
+        <label for="document" class="form-label mt-1">Documento</label>
+        <input name="document" id="document" class="form-control" type="text" required>
 
         <label for="register-email" class="form-label mt-1">Correo institucional</label>
-        <input id="register-email" class="form-control" type="email" placeholder="nombre@empresa.com" autocomplete="email" required>
+        <input name="email" id="register-email" class="form-control" type="email" placeholder="nombre@empresa.com" autocomplete="email" required>
+
+        <label for="phone" class="form-label mt-1">Teléfono</label>
+        <input name="phone" id="phone" class="form-control" type="tel">
+        <label for="program" class="form-label mt-1">Programa</label>
+        <input name="program" id="program" class="form-control" type="text" required>
+        <label for="semester" class="form-label mt-1">Semestre</label>
+        <input name="semester" id="semester" class="form-control" type="number" min="1" required>
 
         <label for="new-password" class="form-label mt-1">Contraseña</label>
         <section class="password-field">
@@ -38,7 +48,8 @@
           <p class="invalid-feedback d-block">Las contraseñas no coinciden.</p>
         }
 
-        <button class="btn btn-primary register-button" type="submit">Crear cuenta</button>
+        @if (error()) { <p class="invalid-feedback d-block">{{ error() }}</p> }
+        <button class="btn btn-primary register-button" type="submit" [disabled]="loading()">{{ loading() ? 'Creando…' : 'Crear cuenta' }}</button>
       </form>
 
       <p class="login-link">¿Ya tienes una cuenta? <button type="button" (click)="returnToLogin()">Inicia sesión</button></p>

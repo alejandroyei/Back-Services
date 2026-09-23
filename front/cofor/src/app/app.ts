@@ -27,6 +27,11 @@ export class App {
   }
 
   protected enterApplication(): void { this.authenticated.set(true); this.activeSection.set('alumnos'); }
-  protected closeSession(): void { this.authenticated.set(false); this.registrationView.set(false); }
+  protected closeSession(): void {
+    sessionStorage.removeItem('co360_access_token');
+    sessionStorage.removeItem('co360_refresh_token');
+    this.authenticated.set(false);
+    this.registrationView.set(false);
+  }
   protected navigateTo(section: 'alumnos' | 'gestion-empresas' | 'empresas' | 'entrega'): void { this.activeSection.set(section); }
 }

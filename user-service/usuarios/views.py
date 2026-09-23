@@ -12,6 +12,12 @@ class UsuarioViewSet(viewsets.ModelViewSet):
     queryset = Usuario.objects.all()
     serializer_class = UsuarioSerializer
 
+    def get_permissions(self):
+        # El registro es el único endpoint público; el resto conserva JWT.
+        if self.action == 'create':
+            return [AllowAny()]
+        return super().get_permissions()
+
 
 class LoginView(APIView):
 
